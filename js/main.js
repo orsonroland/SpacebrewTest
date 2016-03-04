@@ -11,7 +11,7 @@ var sb;
  * The name of your app. Change this!
  * @type {String}
  */
-var appName = "MyCoolApp";
+var appName = "Orson";
 
 /**
  * Often times, you want to randomize your name.
@@ -28,6 +28,9 @@ var doRandomName = true;
 window.onload = function () {
 	setupSpacebrew();
 	setupUI();
+	document.body.onmousemove = function(e){
+		sb.send("mouse", "range", String( e.clientX));
+	}
 }
 
 /**
@@ -47,7 +50,9 @@ function setupSpacebrew(){
 
 	// add publishers and subscribers
 	// sb.addPublish("name", "range");
+	sb.addPublish("mouse", "range");
 	// sb.addSubscribe("name", "range");
+	sb.addSubscribe("background", "range");
 
 	// setup listeners
 	sb.onBooleanMessage = onBooleanMessage;
@@ -80,6 +85,9 @@ function onStringMessage( name, value ){
  * @param  {Number} value
  */
 function onRangeMessage( name, value ){
+	if (name =="background"){
+document.body.style.backgroundColor ="rgb(" + value + "," +value + "," + value + ")";
+	}
 	// do some stuff!
 	console.log("Range: "+name+":"+value);
 }
